@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
-import { IconButton, Checkbox, Button, Box, TablePagination, Tooltip, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Grid } from '@mui/material';
+import { IconButton, Checkbox, Button, Box, TablePagination, Tooltip, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
@@ -115,7 +115,7 @@ function EnhancedTableToolbar(props) {
       {numSelected > 0 ? (
       <>
         <Tooltip title="Approve">
-            <IconButton onClick={addData}>
+            <IconButton onClick={() => addData(selected)}>
               <CheckIcon />
             </IconButton>
         </Tooltip>
@@ -137,13 +137,13 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 }
 
-export default function EnhancedTable({data, handleDelete}, props) {
+export default function EnhancedTable({data, handleDelete, handleAdd}) {
   const [searchResults, setSearchResults] = React.useState([])
   const [selected, setSelected] = React.useState([])
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE)
   const [paddingHeight, setPaddingHeight] = React.useState(0)
-  
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = data.map((n) => n.internalId)
@@ -203,7 +203,7 @@ export default function EnhancedTable({data, handleDelete}, props) {
     <Box sx={{ width: '100%' }}>
 
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar selected={selected} numSelected={selected.length} setSearchResults={setSearchResults}  deleteData={handleDelete}/>
+        <EnhancedTableToolbar selected={selected} numSelected={selected.length} setSearchResults={setSearchResults}  deleteData={handleDelete} addData={handleAdd}/>
 
         <TableContainer>
           <Table
@@ -219,7 +219,6 @@ export default function EnhancedTable({data, handleDelete}, props) {
             <TableBody>
               {(rowsPerPage > 0 && data.length > 0 
               ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            
               : data
               )
               .filter((index) => {

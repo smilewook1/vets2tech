@@ -145,7 +145,7 @@ import SearchBar from '../components/SearchBar';
     numSelected: PropTypes.number.isRequired,
     }
   
-const StdApprove = () => {
+const EmpApprove = () => {
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
@@ -159,6 +159,10 @@ const StdApprove = () => {
     const[firstname, setFirstname] = useState('')
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
+    const[companyId, setCompanyId] = useState(0)
+    const[companyName, setCompanyName] = useState('')
+    const[companyEmail, setCompanyEmail] = useState('')
+    const[companyPhone, setCompanyPhone] = useState(0)
 
     const [searchResults, setSearchResults] = React.useState([])
     const [selected, setSelected] = React.useState([])
@@ -209,12 +213,19 @@ const StdApprove = () => {
     };
     
     const handleAdd = () => {
-        const url = `https://localhost:44439/api/student`
+        const url = `https://localhost:44439/api/employer`
         const data = {
             "firstName": firstname,
             "lastName": lastname,
             "email": email,
-            "passwordHash": password
+            "passwordHash": password,
+            "companyId": companyId,
+            "company": {
+            "companyId": companyId,
+            "companyname": companyName,
+            "email": companyEmail,
+            "phone": companyPhone
+            }
         }
         
         axios.post(url, data)
@@ -262,6 +273,10 @@ const StdApprove = () => {
                 setLastname(result.data.lastName)
                 setEmail(result.data.email)
                 setPassword(result.data.passwordHash)
+                setCompanyPhone(result.data.phone)
+                setCompanyName(result.data.lastName)
+                setCompanyEmail(result.data.email)
+                setCompanyId(result.data.internalId)
             })
             .catch((error)=>{
                 console.log(error)
@@ -276,7 +291,7 @@ const StdApprove = () => {
             newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - data.length) : 0
 
         setPaddingHeight(numEmptyRows)
-        }, [data.length, rowsPerPage]
+        }
     )
 
     const handleChangeRowsPerPage = useCallback(
@@ -286,20 +301,10 @@ const StdApprove = () => {
 
         setPage(0)
 
-        const numEmptyRows =
-        0 > 0
-          ? Math.max(0, (1 + 0) * updatedRowsPerPage - data.length)
-          : 0;
-
-        setPaddingHeight(numEmptyRows)
-        }, [data.length]
+        setPaddingHeight(0)
+        }
     )
-    useEffect(() => {
-        const numEmptyRows =
-          page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-      
-        setPaddingHeight(numEmptyRows);
-      }, [data.length, page, rowsPerPage]);
+
     const isSelected = (id) => selected.indexOf(id) !== -1
 
     return (
@@ -401,4 +406,4 @@ const StdApprove = () => {
     );
 };
   
-  export default StdApprove;
+  export default EmpApprove;

@@ -1,10 +1,9 @@
-import {IconButton, Divider, Container, Typography, Toolbar, Box, AppBar, Button, Card, CardActions, CardContent, Grid, Stack} from '@mui/material/';
+import {IconButton, Container, Typography, Box, Button, Card, CardActions, CardContent, Grid, Stack} from '@mui/material/';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PeopleIcon from '@mui/icons-material/People';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-  
 const theme = createTheme();
-  
+
 export default function Dashboard() {
     return (
     <ThemeProvider theme={theme}>
@@ -84,7 +83,7 @@ export default function Dashboard() {
                     <Button
                         fullWidth
                         variant="text" sx={{ mt: 3, mb: 2 }}
-                        href='/registration'
+                        href='/stdregistration'
                         > Approve Registration 
                     </Button>
                 
@@ -92,7 +91,7 @@ export default function Dashboard() {
                         fullWidth
                         variant="text" sx={{ mt: 3, mb: 2 }}
                         color='success'
-                        href='/profile'
+                        href='/stdprofile'
                         > Create Profile 
                     </Button>
                 
@@ -100,7 +99,7 @@ export default function Dashboard() {
                         fullWidth
                         variant="text" sx={{ mt: 3, mb: 2 }}
                         color='secondary'
-                        href='/data'
+                        href='/stddata'
                         > Edit Data 
                     </Button>
                 </CardActions>
@@ -123,7 +122,7 @@ export default function Dashboard() {
                     <Button
                         fullWidth
                         variant="text" sx={{ mt: 3, mb: 2 }}
-                        href='/registration'
+                        href='/empregistration'
                         > Approve Registration 
                     </Button>
                 
@@ -131,7 +130,7 @@ export default function Dashboard() {
                         fullWidth
                         variant="text" sx={{ mt: 3, mb: 2 }}
                         color='success'
-                        href='/profile'
+                        href='/cmpprofile'
                         > Create Profile 
                     </Button>
 
@@ -139,7 +138,7 @@ export default function Dashboard() {
                         fullWidth
                         variant="text" sx={{ mt: 3, mb: 2 }}
                         color='error'
-                        href='/data'
+                        href='/empdata'
                         > Edit Data 
                     </Button>
                 </CardActions>

@@ -4,12 +4,15 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import App from './App'
 import NotFound from './pages/NotFound'
 import Home from './pages/Home'
-import ApprvRgst from './pages/StdApprove'
-import CreateProfile from './pages/StdCreateProfile'
-import EditData from './pages/StdEditData'
-import SignIn from './components/SignIn'
-import SignUp from './components/SignUp'
+import StdApprove from './pages/StdApprove'
+import StdCreateProfile from './pages/StdCreateProfile'
+import StdEditData from './pages/StdEditData'
+import EmpApprove from './pages/EmpApprove'
+import EmpCreateProfile from './pages/EmpCreateProfile'
+import EmpEditData from './pages/EmpEditData'
 import Dashboard from './components/Dashboard'
+import CmpCreateProfile from './pages/cmpCreateProfile'
+import AdmEditData from './pages/AdmEditData'
 
 
 const router = createBrowserRouter([
@@ -19,12 +22,15 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, path: '/', element: <Home />},
-      { path: '/signin', element: <SignIn />},
-      { path: '/signup', element: <SignUp />},
-      { path: '/registration', element: <ApprvRgst />},
-      { path: '/profile', element: <CreateProfile />},
-      { path: '/data', element: <EditData />},
-      { path: '/dash', element: <Dashboard />}
+      { path: '/stdregistration', element: <StdApprove />},
+      { path: '/stdprofile', element: <StdCreateProfile />},
+      { path: '/stddata', element: <StdEditData />},
+      { path: '/empregistration', element: <EmpApprove />},
+      { path: '/empprofile', element: <EmpCreateProfile />},
+      { path: '/empdata', element: <EmpEditData />},
+      { path: '/dash', element: <Dashboard />},
+      { path: '/cmpprofile', element: <CmpCreateProfile />},
+      { path: '/admdata', element: <AdmEditData />}
     ]
   }
 ])

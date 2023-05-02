@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { AppBar, Snackbar, Button, Box, Modal, Grid, Typography, Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, withTheme, TextField } from '@mui/material';
+import { AppBar, Snackbar, Button, Box, Modal, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import SearchBar from '../components/SearchBar';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MuiAlert from '@mui/material/Alert';
 
-const EditData = () => {
+const StdEditData = () => {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -24,7 +24,7 @@ const EditData = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   
-  const [searchResults, setSearchResults] = useState([]);
+  
 
   const [data, setData] = useState([])
   const [open, setOpen] = useState(false);
@@ -34,18 +34,13 @@ const EditData = () => {
   const [mod, setMod] = useState('');
   const [barOpen, setBarOpen] = useState(false);
   const handlebarClose = () => setBarOpen(false);
+  const [searchResults, setSearchResults] = useState([]);
 
-
-  const[lastname, setLastname] = useState('')
-  const[firstname, setFirstname] = useState('')
-  const[email, setEmail] = useState('')
-  const[password, setPassword] = useState('')
-
-  const[editId, setEditid] = useState('')
-  const[editlname, setEditlname] = useState('')
-  const[editfname, setEditFname] = useState('')
-  const[editemail, setEditemail] = useState('')
-  const[editpassword, setEditpassword] = useState('')
+  const [editId, setEditid] = useState(0)
+  const [editlname, setEditlname] = useState('')
+  const [editfname, setEditFname] = useState('')
+  const [editemail, setEditemail] = useState('')
+  const [editpassword, setEditpassword] = useState('')
 
   const setBar=(mod)=>{
     return(
@@ -96,7 +91,7 @@ const EditData = () => {
       "email": editemail,
       "passwordHash": editpassword
     }
-
+    
     axios.put(url,data)
     .then((result)=>{
       getData()
@@ -108,6 +103,7 @@ const EditData = () => {
     .catch((error)=>{
       console.log(error)
     })
+    console.log(data)
   }
 
   const handleDelete=(id)=>{
@@ -128,10 +124,6 @@ const EditData = () => {
   }
   
   const clear=()=>{
-    setEmail('')
-    setFirstname('')
-    setLastname('')
-    setPassword('')
     setEditFname('')
     setEditlname('')
     setEditemail('')
@@ -174,9 +166,9 @@ const EditData = () => {
               || index.lastName.toLowerCase().includes(searchResults)
               )
             })
-            .map((index, id) => {
+            .map((index) => {
                 return (
-                  <TableRow key={id}>
+                  <TableRow key={index.internalId}>
                     <TableCell component="th" scope="row">
                       {index.internalId}
                     </TableCell>
@@ -185,10 +177,10 @@ const EditData = () => {
                     <TableCell align='right'>{index.email}</TableCell>
                     <TableCell align='right'>{index.passwordHash}</TableCell>
                     <TableCell align='right' colSpan={2}>
-                      <Button variant="outlined" startIcon={<SendIcon />} 
-                      onClick={()=> handleEdit(index.internalId)}>Edit</Button>
-                      <Button variant="contained" endIcon={<DeleteIcon />}
-                      onClick={()=> handleDelete(index.internalId)}>delete</Button>
+                      <Button startIcon={<SendIcon />} 
+                      onClick={()=> handleEdit(index.internalId)}></Button>
+                      <Button endIcon={<DeleteIcon />}
+                      onClick={()=> handleDelete(index.internalId)}></Button>
                     </TableCell>
                   </TableRow>
                   )
@@ -211,7 +203,7 @@ const EditData = () => {
           <Box sx={style}>
                 <Grid container spacing={2}>
                 <Grid item xs={4}>
-                    <TextField id="standard-basic" label="FIRST NAME" variant="standard" placeholder={'Enter first name'}
+                    <TextField id="standard-basic" label="FIRST NAME" variant="standard" placeholder='Enter first name'
                     value={editfname} onChange={(e)=> setEditFname(e.target.value)}></TextField>
                 </Grid>
 
@@ -236,22 +228,10 @@ const EditData = () => {
         </Modal>
         
       </Table>
-
-      <Grid>
-        {barOpen === true
-          ?
-          setBar(mod)
-          : 
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="error" sx={{ width: '100%' }}>
-              Error!
-            </Alert>
-          </Snackbar>
-        }
-      </Grid>  
+          {setBar(mod)}
     </TableContainer>
 
   );
 };
 
-export default EditData;
+export default StdEditData;
