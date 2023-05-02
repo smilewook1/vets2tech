@@ -1,23 +1,32 @@
 import React, {useState} from 'react';
-import {TextField, Button, Typography, Box, Container, Grid} from '@mui/material/';
-import Axios from 'axios';
+import {ListItemText, TextField, Button, Typography, Box, Container, Grid} from '@mui/material/';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Signup () {
     const [firstName, setFname] = useState("");
     const [lastName, setLname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPwd] = useState(0);
+    
+    const [open, setOpen] = useState(false);
 
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const addEmployee = () => {
-        Axios.post("http://localhost:3001/signup/aa", {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password
-        }).then(() => {
-            console.log("success");
-        });
+        const url = "http://localhost:3001/signup/aa"
+        const data = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "password": password
+        }
+        axios.post(url, data)
+        .then((result)=>{
+            
+        })
     };
 
     return (
@@ -85,14 +94,23 @@ function Signup () {
                                 }} />
                         </Grid>
                     </Grid>
-
+                    
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained" sx={{ mt: 3, mb: 2 }}
                         onClick={addEmployee}
-                        > sign up
+                        > Add
                     </Button>
+                    
+                    <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained" sx={{ mt: 3, mb: 2 }}
+                    href='/'
+                    >Cancel
+                    </Button>
+                    
                 </Box>
             </Box>
         </Container>
