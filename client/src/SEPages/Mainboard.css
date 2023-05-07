@@ -1,0 +1,111 @@
+
+.login-form {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 10px;
+}
+
+    .login-form Button {
+        margin: auto;
+        padding: 10px;
+    }
+
+.cool {
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+.fun {
+    text-align: center;
+    margin: 40px;
+}
+
+    .fun button {
+        margin: 30px;
+    }
+
+.but button {
+    text-align: center;
+}
+
+.btn-group button {
+    justify-content: center;
+    margin: 70px;
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 15px 30px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+
+
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    text-align: center;
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+
+
+.btn-circle.btn-xl {
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 12px;
+    text-align: center;
+    display: inline-block;
+    color: #000000
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.subtitle {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    display: inline-block;
+}
+

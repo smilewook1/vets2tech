@@ -12,12 +12,22 @@ export default function AdmCreateProfile(){
   const[firstname, setFirstname] = useState('')
   const[email, setEmail] = useState('')
   const[password, setPassword] = useState('')
-
+  const [mod, setMod] = useState('');
   const [barOpen, setBarOpen] = useState(false);
   const handlebarClose = () => setBarOpen(false);
 
+  const setBar = (mod) => {
+    return (
+      <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
+        <Alert onClose={handlebarClose} severity="success" sx={{ width: '100%' }}>
+          Successfully {mod}!
+        </Alert>
+      </Snackbar>
+    );
+};
+
   const handleAdd = () => {
-    const url = "https://localhost:44439/api/student"
+    const url = "https://localhost:44439/api/admin"
     const data = {
         "firstName": firstname,
         "lastName": lastname,
@@ -56,7 +66,7 @@ export default function AdmCreateProfile(){
       >
 
         <Typography component="h1" variant="h5">
-            Create Profile for Student
+            Create Profile for Admin
         </Typography>
         <Box sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -94,6 +104,7 @@ export default function AdmCreateProfile(){
                   <TextField
                       required
                       fullWidth
+                      type='password'
                       label="PASSWORD"
                       value={password}
                       onChange={(event) => {
@@ -120,22 +131,7 @@ export default function AdmCreateProfile(){
         </Box>
       </Box>
 
-      <Grid>
-        {barOpen === true
-          ?
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="success" sx={{ width: '100%' }}>
-              Successfully Added!
-            </Alert>
-          </Snackbar>
-          : 
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="error" sx={{ width: '100%' }}>
-              Error!
-            </Alert>
-          </Snackbar>
-        }
-      </Grid> 
+      {setBar(mod)}
     </Container>
 
   )

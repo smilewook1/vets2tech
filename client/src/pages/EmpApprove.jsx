@@ -162,7 +162,6 @@ const EmpApprove = () => {
     const[companyId, setCompanyId] = useState(0)
     const[companyName, setCompanyName] = useState('')
     const[companyEmail, setCompanyEmail] = useState('')
-    const[companyPhone, setCompanyPhone] = useState(0)
 
     const [searchResults, setSearchResults] = React.useState([])
     const [selected, setSelected] = React.useState([])
@@ -185,7 +184,7 @@ const EmpApprove = () => {
     },[])
       
     const getData = () =>{
-          axios.get("https://localhost:44439/api/admin")
+          axios.get("https://localhost:44439/api/employerapproval")
           .then((result)=>{
             setData(result.data)
           })
@@ -196,7 +195,7 @@ const EmpApprove = () => {
   
     const handleDelete = (selected) => {
           if (window.confirm("Are you sure?") === true) {
-              axios.delete(`https://localhost:44439/api/admin?id=${selected.join('&id=')}`)
+              axios.delete(`https://localhost:44439/api/employerapproval?id=${selected.join('&id=')}`)
                   .then((result) => {
                       if (result.status === 200) {
                           console.log(`Deleted`)
@@ -213,27 +212,36 @@ const EmpApprove = () => {
     };
     
     const handleAdd = () => {
-        const url = `https://localhost:44439/api/employer`
-        const data = {
-            "firstName": firstname,
-            "lastName": lastname,
-            "email": email,
-            "passwordHash": password,
-            "companyId": companyId,
-            "company": {
-            "companyId": companyId,
-            "companyname": companyName,
-            "email": companyEmail,
-            "phone": companyPhone
+            const url2 = `https://localhost:44439/api/employer`
+            const data2 = {
+                "firstName": firstname,
+                "lastName": lastname,
+                "email": email,
+                "passwordHash": password,
+                "companyId": companyId,
+                "company": {
+                "companyId": companyId,
+                "companyName": companyName,
+                "email": companyEmail,
+                }
             }
-        }
-        
-        axios.post(url, data)
-          .then((result)=>{
-            console.log('Added')
-            setBarOpen(true)
-            setMod('Added')
-          })
+            axios.post(url2, data2)
+              .then((result)=>{
+    
+                axios.delete(`https://localhost:44439/api/employerapproval/${selected}`)
+                      .then((result) => {
+                          if (result.status === 200) {
+                              getData()
+                              console.log('Added')
+                                setBarOpen(true)
+                                setMod('Added')
+                          }
+                      })
+                      .catch((error) => {
+                          console.log(error)
+                      })
+              })
+
           .catch((error) => {
             console.log(error)
           })
@@ -267,16 +275,15 @@ const EmpApprove = () => {
         console.log(newSelected)
         setSelected(newSelected)
 
-        axios.get(`https://localhost:44439/api/admin/${id}`)
+        axios.get(`https://localhost:44439/api/employerapproval/${id}`)
             .then((result)=>{
-                setFirstname(result.data.firstName)
-                setLastname(result.data.lastName)
-                setEmail(result.data.email)
-                setPassword(result.data.passwordHash)
-                setCompanyPhone(result.data.phone)
-                setCompanyName(result.data.lastName)
-                setCompanyEmail(result.data.email)
-                setCompanyId(result.data.internalId)
+                setFirstname(result.data.employerFirstname)
+                setLastname(result.data.employerLastname)
+                setEmail(result.data.employerEmail)
+                setPassword(result.data.employerPassword)
+                setCompanyName(result.data.companyName)
+                setCompanyEmail(result.data.companyEmail)
+                setCompanyId(result.data.companyId)
             })
             .catch((error)=>{
                 console.log(error)
@@ -326,7 +333,7 @@ const EmpApprove = () => {
                         <TableBody>
                         {(rowsPerPage > 0 && data.length > 0 
                         ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : data
+                        : rowsPerPage === 0 ? null : data
                         )
                         .filter((index) => {
                             return (searchResults === '' 
@@ -369,10 +376,10 @@ const EmpApprove = () => {
                                     {row.internalId}
                                     </TableCell>
 
-                                    <TableCell align="right">{row.firstName}</TableCell>
-                                    <TableCell align="right">{row.lastName}</TableCell>
-                                    <TableCell align="right">{row.email}</TableCell>
-                                    <TableCell align="right">{row.passwordHash}</TableCell>
+                                    <TableCell align="right">{row.employerFirstname}</TableCell>
+                                    <TableCell align="right">{row.employerLastname}</TableCell>
+                                    <TableCell align="right">{row.employerEmail}</TableCell>
+                                    <TableCell align="right">{row.employerPassword}</TableCell>
                                 </TableRow>
                                 )
                             })}

@@ -21,7 +21,7 @@ export default function StdCreateProfile(){
 
 
   const handleAdd = () => {
-    if (validate()) {
+    
       const url = "https://localhost:44439/api/student"
       const data = {
           "firstName": firstname,
@@ -40,9 +40,7 @@ export default function StdCreateProfile(){
         .catch((error) => {
           console.log(error)
         })
-      } else{
-        alert('error')
-      }
+      
   }
 
   const clear=()=>{
@@ -100,6 +98,7 @@ export default function StdCreateProfile(){
                   <TextField
                       required
                       fullWidth
+                      type='email'
                       name='email'
                       label="EMAIL ADDRESS"
                       value={email}
@@ -120,23 +119,8 @@ export default function StdCreateProfile(){
                       value={password}
                       onChange={(event) => {
                           setPassword(event.target.value);
-                          setPasswordError(false)
                       }} />
-              </Grid>
-              <Grid item xs={12}>
-                  <TextField
-                      required
-                      fullWidth
-                      type='password'
-                      name="confirmPassword"
-                      label="CONFIRM PASSWORD"
-                      value={confirm}
-                      onChange={validate}
-                      error={passwordError}
-                      helperText={passwordError ? "Passwords do not match" : ''} 
-                      />
-                      
-              </Grid>         
+              </Grid>       
           </Grid>
           
           <Button
@@ -151,7 +135,7 @@ export default function StdCreateProfile(){
           type="submit"
           fullWidth
           variant="contained" sx={{ mt: 3, mb: 2 }}
-          href='/'
+          href='/dash'
           >GO BACK
           </Button>
         </Box>

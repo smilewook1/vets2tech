@@ -12,11 +12,20 @@ export default function CmpCreateProfile(){
   const[name, setName] = useState('')
   const[phone, setPhone] = useState('')
   const[email, setEmail] = useState('')
-
+  const [mod, setMod] = useState('');
   const [barOpen, setBarOpen] = useState(false);
   const handlebarClose = () => setBarOpen(false);
   const navigate = useNavigate();
 
+  const setBar = (mod) => {
+    return (
+      <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
+        <Alert onClose={handlebarClose} severity="success" sx={{ width: '100%' }}>
+          Successfully {mod}!
+        </Alert>
+      </Snackbar>
+    );
+};
   const handleAdd = () => {
     const url = "https://localhost:44439/api/company"
     const data = {
@@ -82,6 +91,7 @@ export default function CmpCreateProfile(){
                   <TextField
                       required
                       fullWidth
+                      type="email"
                       label="EMAIL ADDRESS"
                       value={email}
                       onChange={(event) => {
@@ -102,27 +112,14 @@ export default function CmpCreateProfile(){
           type="submit"
           fullWidth
           variant="contained" sx={{ mt: 3, mb: 2 }}
-          href='/'
+          href='/dash'
           >GO BACK
           </Button>
         </Box>
       </Box>
 
       <Grid>
-        {barOpen === true
-          ?
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="success" sx={{ width: '100%' }}>
-              Successfully Added!
-            </Alert>
-          </Snackbar>
-          : 
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="error" sx={{ width: '100%' }}>
-              Error!
-            </Alert>
-          </Snackbar>
-        }
+      {setBar(mod)}
       </Grid> 
     </Container>
 

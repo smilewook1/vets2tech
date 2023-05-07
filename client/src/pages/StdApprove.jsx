@@ -117,7 +117,7 @@ import SearchBar from '../components/SearchBar';
         {numSelected === 1 ? (
         <>
             <Tooltip title="Approve">
-                <IconButton onClick={() => addData()}>
+                <IconButton onClick={() => addData(selected)}>
                 <CheckIcon />
                 </IconButton>
             </Tooltip>
@@ -181,7 +181,7 @@ const StdApprove = () => {
     },[])
       
     const getData = () =>{
-          axios.get("https://localhost:44439/api/admin")
+          axios.get("https://localhost:44439/api/studentapproval")
           .then((result)=>{
             setData(result.data)
           })
@@ -192,7 +192,7 @@ const StdApprove = () => {
   
     const handleDelete = (selected) => {
           if (window.confirm("Are you sure?") === true) {
-              axios.delete(`https://localhost:44439/api/admin?id=${selected.join('&id=')}`)
+              axios.delete(`https://localhost:44439/api/studentapproval?id=${selected.join('&id=')}`)
                   .then((result) => {
                       if (result.status === 200) {
                           console.log(`Deleted`)
@@ -208,7 +208,7 @@ const StdApprove = () => {
           }
     };
     
-    const handleAdd = () => {
+    const handleAdd = (selected) => {
         const url = `https://localhost:44439/api/student`
         const data = {
             "firstName": firstname,
@@ -219,9 +219,20 @@ const StdApprove = () => {
         
         axios.post(url, data)
           .then((result)=>{
-            console.log('Added')
-            setBarOpen(true)
-            setMod('Added')
+            
+
+            axios.delete(`https://localhost:44439/api/studentapproval/${selected}`)
+                  .then((result) => {
+                      if (result.status === 200) {
+                        console.log('Added')
+                        setBarOpen(true)
+                        setMod('Added')
+                          getData()
+                      }
+                  })
+                  .catch((error) => {
+                      console.log(error)
+                  })
           })
           .catch((error) => {
             console.log(error)
@@ -256,12 +267,12 @@ const StdApprove = () => {
         console.log(newSelected)
         setSelected(newSelected)
 
-        axios.get(`https://localhost:44439/api/admin/${id}`)
+        axios.get(`https://localhost:44439/api/studentapproval/${id}`)
             .then((result)=>{
-                setFirstname(result.data.firstName)
-                setLastname(result.data.lastName)
-                setEmail(result.data.email)
-                setPassword(result.data.passwordHash)
+                setFirstname(result.data.studentFirstname)
+                setLastname(result.data.studentLastname)
+                setEmail(result.data.studentEmail)
+                setPassword(result.data.studentPassword)
             })
             .catch((error)=>{
                 console.log(error)
@@ -321,14 +332,14 @@ const StdApprove = () => {
                         <TableBody>
                         {(rowsPerPage > 0 && data.length > 0 
                         ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : data
+                        : rowsPerPage === 0 ? null : data
                         )
                         .filter((index) => {
                             return (searchResults === '' 
                             ? index
                             : index.firstName.toLowerCase().includes(searchResults)
                             || index.lastName.toLowerCase().includes(searchResults)
-                            )}
+                            )} 
                         )
                         .map((row, index) => {
                                 const isItemSelected = isSelected(row.internalId)
@@ -364,10 +375,10 @@ const StdApprove = () => {
                                     {row.internalId}
                                     </TableCell>
 
-                                    <TableCell align="right">{row.firstName}</TableCell>
-                                    <TableCell align="right">{row.lastName}</TableCell>
-                                    <TableCell align="right">{row.email}</TableCell>
-                                    <TableCell align="right">{row.passwordHash}</TableCell>
+                                    <TableCell align="right">{row.studentFirstname}</TableCell>
+                                    <TableCell align="right">{row.studentLastname}</TableCell>
+                                    <TableCell align="right">{row.studentEmail}</TableCell>
+                                    <TableCell align="right">{row.studentPassword}</TableCell>
                                 </TableRow>
                                 )
                             })}

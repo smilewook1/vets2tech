@@ -38,7 +38,7 @@ export default function Dashboard() {
                     edge="start"
                     color="inherit"
                     sx={{ mr: 2 }}
-                    href='#'
+                    href='/admdata'
                     >
                     <PeopleIcon />
                         
@@ -49,7 +49,7 @@ export default function Dashboard() {
                     edge="start"
                     color="inherit"
                     sx={{ mr: 2 }}
-                    href='#'
+                    href='/'
                     >
                     <LogoutIcon />
                         
@@ -72,10 +72,6 @@ export default function Dashboard() {
                 <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                     Student
-                    </Typography>
-                    <Typography>
-                    This is a media card. You can use this section to describe the
-                    content.
                     </Typography>
                 </CardContent>
 
@@ -111,10 +107,6 @@ export default function Dashboard() {
                 <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                     Employer
-                    </Typography>
-                    <Typography>
-                    This is a media card. You can use this section to describe the
-                    content.
                     </Typography>
                 </CardContent>
 

@@ -18,9 +18,18 @@ export default function EmpCreateProfile(){
   const[companyEmail, setCompanyEmail] = useState('')
   const[companyPhone, setCompanyPhone] = useState(0)
 
+  const [mod, setMod] = useState('');
   const [barOpen, setBarOpen] = useState(false);
   const handlebarClose = () => setBarOpen(false);
-  
+  const setBar = (mod) => {
+    return (
+      <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
+        <Alert onClose={handlebarClose} severity="success" sx={{ width: '100%' }}>
+          Successfully {mod}!
+        </Alert>
+      </Snackbar>
+    );
+};
   useEffect(()=>{
     getData()
   },[])
@@ -41,7 +50,6 @@ export default function EmpCreateProfile(){
       console.log(error)
     })
   }
-
   const handleAdd = () => {
     const url = "https://localhost:44439/api/employer"
     const data = {
@@ -51,7 +59,6 @@ export default function EmpCreateProfile(){
         "passwordHash": password,
         "companyId": companyId,
         "company": {
-        "companyId": companyId,
         "companyname": companyName,
         "email": companyEmail,
         "phone": companyPhone
@@ -65,6 +72,7 @@ export default function EmpCreateProfile(){
       console.log('Added')
       clear();
       setBarOpen(true)
+      setMod("Added")
     })
     .catch((error) => {
       console.log(error)
@@ -118,6 +126,7 @@ export default function EmpCreateProfile(){
                   <TextField
                       required
                       fullWidth
+                      type="email"
                       label="EMAIL ADDRESS"
                       value={email}
                       onChange={(event) => {
@@ -155,27 +164,14 @@ export default function EmpCreateProfile(){
           type="submit"
           fullWidth
           variant="contained" sx={{ mt: 3, mb: 2 }}
-          href='/'
+          href='/dash'
           >HOME
           </Button>
         </Box>
       </Box>
 
       <Grid>
-        {barOpen === true
-          ?
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="success" sx={{ width: '100%' }}>
-              Successfully Added!
-            </Alert>
-          </Snackbar>
-          : 
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={handlebarClose}>
-            <Alert onClose={handlebarClose} severity="error" sx={{ width: '100%' }}>
-              Error!
-            </Alert>
-          </Snackbar>
-        }
+      {setBar(mod)}
       </Grid> 
     </Container>
 
